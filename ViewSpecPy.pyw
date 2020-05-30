@@ -1,7 +1,7 @@
 import io, sys, math
-import tkMessageBox
-from Tkinter import Tk
-from tkFileDialog import askopenfilename, asksaveasfile 
+import tkinter.messagebox as tkMessageBox
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename, asksaveasfile 
 
 class ViewSpecPy(object):
     def __init__(self):
@@ -16,7 +16,7 @@ class ViewSpecPy(object):
         self.dict[key] = value
 
     def load(self, reader, i):
-        for j in xrange(len(reader)):   # Iterates through the lines
+        for j in range(len(reader)):   # Iterates through the lines
             # Splits the row
             row = reader[j].split('\t')[1:]
             # Defines the header
@@ -30,10 +30,10 @@ class ViewSpecPy(object):
     def derivative(self, gap):
         # Calculates the 1st derivative
         i = self.dict.keys()    # Gets the wavelengths
-        j = map(float, self.dict.values())  # Gets the values and converts them into float
+        j = list(map(float, self.dict.values()))  # Gets the values and converts them into float
         m = gap/2   # Gets the median of the gap
         r = []
-        for l in xrange(len(self.dict)):
+        for l in range(len(self.dict)):
             if (l+1 <= m) or (l+1 >= (len(self.dict) - m)):
                 # Fill the values before
                 # (at the begining)
@@ -52,7 +52,7 @@ class ViewSpecPy(object):
     def process(self):
         i = self.dict
         j = self.indices
-        l = self.derivative(7)
+        # l = self.derivative(7)
 
         mn = min(i.keys())
         mx = max(i.keys())
@@ -101,35 +101,48 @@ class ViewSpecPy(object):
                 exec(m)
 
 def main():
-    # Exports the indices
+    # this exports the indices
     # into a csv file
     def export(signatures):
         with asksaveasfile(mode='w', defaultextension='.csv', filetypes=[('.csvfile', '.csv')], title='Selecionar arquivo de resultados') as writer:
             for i in signatures:
-                # Writes first line: names of the indices
+                # this writes first line: names of the indices
                 if i == signatures[0]:
-                    keys = [''] + i.indices.keys() + ['\n']
+                    keys = [''] + list(i.indices.keys()) + ['\n']
                     writer.write(",".join(keys))
-                # Writes the other lines
-                header = str(i.header).replace('\n', '')    # Gets the name of the file or signature
-                x = [header] + map(str, i.indices.values()) + ['\n']    # Gets the data of each index
+                # this writes the other lines
+                header = str(i.header).replace('\n', '')    # this gets the name of the file or signature
+                x = [header] + list(map(str, i.indices.values())) + ['\n']    # this gets the data of each index
                 writer.write(",".join(x))
 
+    # this opens the first
+    # window that asks for
+    # the input file
     Tk().withdraw()
     file = askopenfilename(filetypes=[('.ViewSpec','.dat'), ('.ViewSpec','.txt')], title='Abrir arquivo do ViewSpec')
     tkMessageBox.showwarning("Aviso", "Por favor espere uma segunda janela abrir.")
 
-    signatures = [] # Creates signatures list
+    # this creates the
+    # signatures list
+    signatures = []
+
+    # this part tries 
+    # to load the
+    # dataset
     try:
         reader = io.open(file, 'r', encoding='utf-16').readlines() # Handles utf-16 encoded files
     except:
         reader = io.open(file, 'r', encoding='utf-8').readlines() # Handles utf-8 encoded files
-    for i in xrange(len(reader[0].split('\t')[1:])):    # Iterates through the columns
-        signature = ViewSpecPy()  # Creates the ViewSpec object
-        signature.load(reader, i)    # Start signature.dict populating
-        signature.process()  # Start signature.indices populating
-        signatures.append(signature) # Adds the ViewSpec object to signatures list
 
+    for i in range(len(reader[0].split('\t')[1:])):    # this iterates through the columns
+        signature = ViewSpecPy()  # this creates the ViewSpecPy object
+        signature.load(reader, i)    # this starts populating the signature.dict
+        signature.process()  # this starts populating the signature.indices
+        signatures.append(signature) # this adds the ViewSpecPy object to the signatures list
+
+    # this exports the
+    # content of the
+    # signatures list
     export(signatures)
 
 
