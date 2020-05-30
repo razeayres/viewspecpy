@@ -4,7 +4,7 @@
 ###### Contact: rodrigo.qmiranda@gmail.com
 
 ### About
-ViewSpecPy fits multiple indices using .dat reflectance files exported from the software ViewSpec Pro™. The scripts were developed for the interpreter Python 2.7.15.
+ViewSpecPy calculates multiple indices using .dat reflectance files exported from the software ViewSpec Pro™. The scripts were developed for the interpreter Python 3.6.9.
 
 ### Package usage
 ```r
