@@ -1,3 +1,6 @@
+# code by Rodrigo Miranda (rodrigo.qmiranda@gmail.com)
+# and Josicleda Galvincio (josicleda@gmail.com)
+
 import io, sys, math
 import tkinter.messagebox as tkMessageBox
 from tkinter import Tk
