@@ -1,5 +1,5 @@
 # ViewSpecPy -  program for post-processing spectra files
-###### *Rodrigo de Queiroga Miranda*
+###### *Rodrigo de Queiroga Miranda, Magna Soelma Beserra de Moura, Josiclêda Domiciano Galvíncio*
 
 ###### Contact: rodrigo.qmiranda@gmail.com
 
