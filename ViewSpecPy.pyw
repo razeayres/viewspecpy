@@ -8,47 +8,50 @@ from tkinter.filedialog import askopenfilename, asksaveasfile
 
 class ViewSpecPy(object):
     def __init__(self):
-        self.header = ''    # Initializes self.header
+        self.header = ''    # this initializes self.header
         self.dict = {}
         self.indices = {}
 
     def add(self, t):
         t = t.split(',')
-        key = int(float(t[0]))  # To handle the invalid literal for int()
+        key = int(float(t[0]))  # this is to handle the invalid literal for int()
         value = float(t[1])
         self.dict[key] = value
 
     def load(self, reader, i):
-        for j in range(len(reader)):   # Iterates through the lines
-            # Splits the row
+        for j in range(len(reader)):   # this iterates through the lines
+            # this splits the row
             row = reader[j].split('\t')[1:]
-            # Defines the header
+            # this defines the header
             if j == 0:
                 self.header = row = row[i]  # Populates self.header
                 continue
-            # Add the data to the 
+            # this adds the
+            # data to the 
             # dict object
-            self.add(row[i])    # Populates self.dict
+            self.add(row[i])    # this populates self.dict
     
     def derivative(self, gap):
-        # Calculates the 1st derivative
-        i = self.dict.keys()    # Gets the wavelengths
-        j = list(map(float, self.dict.values()))  # Gets the values and converts them into float
-        m = gap/2   # Gets the median of the gap
+        # this calculates the
+        # 1st derivative
+        i = self.dict.keys()    # this gets the wavelengths
+        j = list(map(float, self.dict.values()))  # this gets the values and converts them into float
+        m = gap/2   # this gets the median of the gap
         r = []
         for l in range(len(self.dict)):
             if (l+1 <= m) or (l+1 >= (len(self.dict) - m)):
-                # Fill the values before
+                # this fills the values before
                 # (at the begining)
                 # and after (at the end)
                 # the median of the gap
                 # as 0 (zero)
                 r.append(0)
             else:
-                # Calculates 1st
+                # this calculates
+                # the 1st
                 # derivative data
                 x = (j[l-m] - j[l+m]) / (i[l-m] - i[l+m])
-                x = round(x, 3) # Rounds the value to a 3 decimal number
+                x = round(x, 3) # this rounds the value to a 3 decimal number
                 r.append(x)
         return r
 
@@ -62,8 +65,10 @@ class ViewSpecPy(object):
 
         o = []
 
-        # Populates self.indices
-        # Add new indices here:
+        # this populates self.indices
+        # To add new indices here
+        # you must edit the following
+        # lines
         if mx > 1075:
             o = o + ["j['NDWI'] = (i[860] - i[1240]) / (i[860] + i[1240])"]
 
@@ -133,9 +138,9 @@ def main():
     # to load the
     # dataset
     try:
-        reader = io.open(file, 'r', encoding='utf-16').readlines() # Handles utf-16 encoded files
+        reader = io.open(file, 'r', encoding='utf-16').readlines() # this handles utf-16 encoded files
     except:
-        reader = io.open(file, 'r', encoding='utf-8').readlines() # Handles utf-8 encoded files
+        reader = io.open(file, 'r', encoding='utf-8').readlines() # this handles utf-8 encoded files
 
     for i in range(len(reader[0].split('\t')[1:])):    # this iterates through the columns
         signature = ViewSpecPy()  # this creates the ViewSpecPy object
