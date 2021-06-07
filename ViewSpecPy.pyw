@@ -56,6 +56,15 @@ class ViewSpecPy(object):
         return r
 
     def process(self):
+        # this creates an string-array
+        # of bands
+        def interval(mn, mx):
+            v = []
+            for i in range(mn, mx+1):
+                v.append("i[" + str(i) + "]")
+            v = ", ".join(v)
+            return(v)
+
         i = self.dict
         j = self.indices
         # l = self.derivative(7)
